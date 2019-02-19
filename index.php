@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
 
+  <title></title>
+  
 </head>
 <body>
   <?php
@@ -32,7 +33,7 @@
       $fileErr = "Please upload your ID";
     } else {
       $file = test_input($_POST["file"]);
-      if (!preg_match("/^[a-zA-z0-9]*.csv$/",$file)) {
+      if (!preg_match("/^[a-zA-z0-9 ]*.csv$/",$file)) {
         $fileErr = "Only .csv file allowed"; 
       }else {
         $myFile = fopen($file,"r");
@@ -57,7 +58,7 @@
     <span class="error">* <?php echo $nameErr?> </span><br>
     University : <input type="text" name ="university" value="<?php echo $university;?>"><br>
     Please input your grade in this form, 
-    <a href="">download here</a>  <br>
+    <a href="data.csv">download here</a>  <br>
     Upload : <input type="file" name="file" value="<?php echo $file;?>"> <span class="error">* <?php echo $fileErr?> </span> <br>
     <input type="submit" name="submit" value = "save">
   </form>
