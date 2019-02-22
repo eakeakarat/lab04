@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css?family=Cinzel|Hanalei+Fill|Kalam|Monoton');
+html{
+    background-color: transparent;
+}
+.require{
+    color: red;
+}
+.box {
+    margin: auto;
+    width: 60%;
+    color: rgb(255, 255, 255);
+    background-color: rgb(124, 124, 124);
+    position: inherit;
+}
+h1{
+    font-size: 2em;
+    text-align: center;
+    color: rgb(8, 129, 243)
+}
+a {
+    color: rgb(252, 200, 88);
+}
+#file {
+    background-color: rgb(150, 150, 150);
+    color: black;
+}
+body {     	
+    background-image: url("https://wallpaper.campus-star.com/app/uploads/2016/08/wall-pink09.jpg");	
+	background-repeat: no-repeat;
+	background-position: inherit;
+    background-attachment: fixed;
+
+	font-family: 'Kalam', cursive;
+	font-size: 1.5em;
+	color: black;
+	text-decoration: none;
+}
+
+form div {
+    text-align: center;
+    margin: 5px 0px;
+}
+form p {
+    text-indent: 18%;
+    margin: 5px 0px;
+}
+#name,#id,#univer {
+    width: 50%;
+}
+#submit-btn{
+    width: 20%;
+    height: 50px;
+}
+section.hero {
+    display: block;
+}
+#result{
+    margin-bottom: 2%;
+}

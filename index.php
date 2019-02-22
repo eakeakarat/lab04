@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-  <title></title>
+  <title>Grade Calculator</title>
+  <link rel="stylesheet" href="bulma-0.7.2/css/bulma.css">
+  <link rel="stylesheet" href="style.css">
   
 </head>
 <body>
-  <?php
-  $name = $id = $university = $file = $text = "";
+<?php
+  $name = $id = $university = $file =  "";
+  $fileReady = $nameOK = $idOK = false ;
   $nameErr = $idErr = $fileErr = "";
+  $t = $s = "none";
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["name"])) {
@@ -17,6 +20,9 @@
       $name = test_input($_POST["name"]);
       if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
         $nameErr = "Name much contains only letters and white space"; 
+      }else {
+        $nameErr = "";
+        $nameOK = true;
       }
     }
     
@@ -26,6 +32,9 @@
       $id = test_input($_POST["id"]);
       if (!preg_match("/^[0-9]+$/",$id)) {
         $idErr = "ID much contains only numbers"; 
+      }else {
+        $idErr = "";
+        $idOK = true;
       }
     }
 
@@ -36,12 +45,19 @@
       if (!preg_match("/^[a-zA-z0-9 ]*.csv$/",$file)) {
         $fileErr = "Only .csv file allowed"; 
       }else {
-        $myFile = fopen($file,"r");
-        $text = fread($myFile,filesize($file));
-        fclose($myFile);
-      }          
+        $fileErr = "";
+        $fileReady = true;
+      }         
     }
     $university = test_input($_POST["university"]);
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      if ($fileReady && $idOK && $nameOK){
+        $t = "" ;
+      }else {
+        $t = "none";
+      }
+    }
   }
 
   function test_input($data) {
@@ -50,34 +66,70 @@
     $data = htmlspecialchars($data);
     return $data;
   }
-  ?>
-  <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    Name: <input type="text" name="name" value="<?php echo $name;?>">
-    <span class="error">* <?php echo $nameErr?> </span><br>
-    ID:<input type="text" name="id" value="<?php echo $id;?>">
-    <span class="error">* <?php echo $nameErr?> </span><br>
-    University : <input type="text" name ="university" value="<?php echo $university;?>"><br>
-    Please input your grade in this form, 
-    <a href="data.csv">download here</a>  <br>
-    Upload : <input type="file" name="file" value="<?php echo $file;?>"> <span class="error">* <?php echo $fileErr?> </span> <br>
-    <input type="submit" name="submit" value = "save">
-  </form>
+?>
 
-  <?php
-  echo $name; echo '<br>';
-  echo $id; echo '<br>';
-  echo $university; echo '<br>';
-  echo $text; echo '<br>';
-  ?>
+  <section class="hero is-fullheight">
+    <h1>Grade Calculator</h1>
+      <div class="container" id="first-box">
+        <form class="box container" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">   
+          <p>Name: <span class="require">*<?php echo $nameErr?></span></p>
+          <div><input id="name" class="input is-rounded is-info" type="text" placeholder="Name" name="name" value="<?php echo $name;?>"></div> 
 
+          <p>ID: <span class="require">*<?php echo $idErr?></span></p>
+          <div><input id="id" class="input is-rounded is-info" type="text" placeholder="ID" name="id" value="<?php echo $id;?>"></div>
 
+          <p>University : </p>
+          <div><input id="univer" class="input is-rounded is-info" type="text" placeholder="university" name ="university" value="<?php echo $university;?>"><br></div>
 
+          <p style="text-align: center; text-indent: 0px;">Please input your grade in this form, <a href="data.csv">download here</a></p>
 
+          <p>Upload your complete form : <span class="require">* <?php echo $fileErr?></span></p> 
+          <div>
+            <input id="file" type="file" name="file" value="<?php echo $file;?>" style="display:none" 
+            onchange=uploaded(this)>
+            <label for="file" class="button" > Select a file... </label> <br>
+            <label id="return-file" ></label>
+            <br>
+          </div>
+        
+          <div>
+            <input id="submit-btn" class="button is-rounded" type="submit" name="submit" value = "Submit">
+          </div>
+        </form>
+     
+      <div id="result" class="box container result" style="display:<?php echo $t ?>">
+        <?php
+          if ($fileReady && $idOK && $nameOK){
+            echo "Name: " . $name . '<br>';
+            echo "ID: " . $id . '<br>';
+            if ($university != ''){
+              echo "University: " . $university . "<br>";
+            }
+            echo "<br>";
+            $totalCredit = $totalScore = 0.00;
+            $myFile = fopen($file,"r");
+            while (!feof($myFile)){
+              $text = explode(",",fgets($myFile));
+              echo $text[0] . "<br>" . "Credit: "  . $text[2] . " Grade: " .  $text[1] . "<br>" ;
+              $tmp = intval($text[2]);
+              $tmp1 = floatval($text[1]);
+              $totalCredit += $tmp;
+              $totalScore += ($tmp * $tmp1);
+            }
+            fclose($myFile);
+            echo "<br>" . "Your GPA: " . number_format(($totalScore / $totalCredit),2);
+          }
+        ?>
+      </div>
+    </div>
+  </section>
 
-
-
-
-
+  <script>
+    function uploaded(dir){
+      var file = "selected file:" + '<br>' + dir.files[0].name ;
+      document.getElementById('return-file').innerHTML = file;
+    }
+  </script>
 
 </body>
 
