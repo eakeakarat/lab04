@@ -68,7 +68,7 @@
   }
 ?>
 
-  <section class="hero is-fullheight">
+  <section class="hero">
     <h1>Grade Calculator</h1>
       <div class="container" id="first-box">
         <form class="box container" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">   
@@ -87,7 +87,7 @@
           <div>
             <input id="file" type="file" name="file" value="<?php echo $file;?>" style="display:none" 
             onchange=uploaded(this)>
-            <label for="file" class="button" > Select a file... </label> <br>
+            <label for="file" class="button" id="select-file" > Select a file... </label> <br>
             <label id="return-file" ></label>
             <br>
           </div>
@@ -110,11 +110,43 @@
             $myFile = fopen($file,"r");
             while (!feof($myFile)){
               $text = explode(",",fgets($myFile));
-              echo $text[0] . "<br>" . "Credit: "  . $text[2] . " Grade: " .  $text[1] . "<br>" ;
-              $tmp = intval($text[2]);
-              $tmp1 = floatval($text[1]);
-              $totalCredit += $tmp;
-              $totalScore += ($tmp * $tmp1);
+
+              $grade = floatval($text[1]);
+              $cr = intval($text[2]);
+
+              if ($text[1] == 'A' || $text[1] == 'a' || $grade == 4.00 ){
+                $grade = 4.00;
+                $text[1] = '4.00';
+              } elseif ($text[1] == 'B+' || $text[1] == 'b+' || $grade == 3.50 ){
+                $grade = 3.50;
+                $text[1] = '3.50';
+              } elseif ($text[1] == 'B' || $text[1] == 'b' || $grade == 3.00 ){
+                $grade = 3.00;
+                $text[1] = '3.00';
+              } elseif ($text[1] == 'C+' || $text[1] == 'c+' || $grade == 2.50 ){
+                $grade = 2.50;
+                $text[1] = '2.50';
+              } elseif ($text[1] == 'C' || $text[1] == 'c' || $grade == 2.00 ){
+                $grade = 2.00;
+                $text[1] = '2.00';
+              } elseif ($text[1] == 'D+' || $text[1] == 'd+' || $grade == 1.50 ){
+                $grade = 1.50;
+                $text[1] = '1.50';
+              } elseif ($text[1] == 'D' || $text[1] == 'd' || $grade == 1.00 ){
+                $grade = 1.00;
+                $text[1] = '1.00';
+              }else { // P=pass or NP=notpass both are not accept
+                $grade = '-1';
+                $text[1] = 'Wrong format';
+              }
+              
+              
+              if ($grade != -1) {
+                $totalCredit += $cr;
+                $totalScore += ($grade * $cr);
+              }
+              echo "&nbsp" . $text[0] . "<br>" . "Credit: "  . $text[2] . " Grade: " .  $text[1] . "<br>" ;
+
             }
             fclose($myFile);
             echo "<br>" . "Your GPA: " . number_format(($totalScore / $totalCredit),2);

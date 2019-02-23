@@ -3,13 +3,13 @@ html{
     background-color: transparent;
 }
 .require{
-    color: red;
+    color: rgb(255, 0, 0);
 }
 .box {
     margin: auto;
     width: 60%;
     color: rgb(255, 255, 255);
-    background-color: rgb(124, 124, 124);
+    background-image: url("https://obs.line-scdn.net/0h1a06E6E3bk4NT0HbuhERGTQZbSE-I31NaXk_TVEhMHooKCpLYSgpIC4bOC0gLykQZCklICgKMXgjK30ZZiE/w644");
     position: inherit;
 }
 h1{
@@ -18,17 +18,18 @@ h1{
     color: rgb(8, 129, 243)
 }
 a {
-    color: rgb(252, 200, 88);
+    color: rgb(235, 128, 109);
 }
 #file {
     background-color: rgb(150, 150, 150);
     color: black;
 }
 body {     	
-    background-image: url("https://wallpaper.campus-star.com/app/uploads/2016/08/wall-pink09.jpg");	
+    background-image: url("http://3.bp.blogspot.com/-NiwRd0J58N0/UhQey0pGK5I/AAAAAAAAIAc/D5oDutp4Cy4/s1600/cute+powerpoint+background+1.jpg");	
 	background-repeat: no-repeat;
 	background-position: inherit;
     background-attachment: fixed;
+    background-size: 100%;
 
 	font-family: 'Kalam', cursive;
 	font-size: 1.5em;
@@ -50,10 +51,14 @@ form p {
 #submit-btn{
     width: 20%;
     height: 50px;
+    background-color: rgb(219, 180, 208);
 }
 section.hero {
     display: block;
 }
 #result{
     margin-bottom: 2%;
+}
+#select-file{
+    background-color: rgb(249, 156, 118);
 }

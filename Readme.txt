@@ -1,0 +1,1 @@
+นำไฟล์ใน folder gradeCal ไปวางใน directory ที่ local web server ของท่าน เช่น C:\laragon\www\ 
