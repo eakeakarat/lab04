@@ -88,8 +88,7 @@
             <input id="file" type="file" name="file" value="<?php echo $file;?>" style="display:none" 
             onchange=uploaded(this)>
             <label for="file" class="button" id="select-file" > Select a file... </label> <br>
-            <label id="return-file" ></label>
-            <br>
+            <label class='box' id="return-file" style="box-shadow:0 0px 0px; width:50%"></label>
           </div>
         
           <div>
